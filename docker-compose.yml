@@ -1,0 +1,23 @@
+# Versi Docker Compose file
+version: '2.8'  
+
+services:
+  # Service MongoDB
+  item-db:
+    image: mongo:3  # Menggunakan image MongoDB versi
+    volumes:
+      - app-db:/data/db  # Mount volume bernama app-db ke folder /data/db di dalam container
+    restart: always  # Container akan otomatis restart jika mati/error
+
+  # Service untuk aplikasi Node.js kamu
+  item-app:
+    image: ghcr.io/faizabrar424/item-app:v1  # ini adalah image yang diunduh dari GitHub Container Registry
+    ports:
+      - "80:8080"  # Mapping port 8080 di dalam container ke port 80 di host.
+    depends_on:
+      - item-db  # Pastikan item-app hanya mulai setelah item-db (MongoDB) berjalan
+    restart: always  # Container akan otomatis restart jika mati/error
+
+# Volume yang digunakan untuk menyimpan data MongoDB secara permanen
+volumes:
+  app-db:
