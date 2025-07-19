@@ -1,5 +1,5 @@
 # Versi Docker Compose file
-version: '2.8'  
+version: '3.8'  
 
 services:
   # Service MongoDB
